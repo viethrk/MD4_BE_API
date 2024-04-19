@@ -16,6 +16,9 @@ export class User extends BaseEntity {
   @Column()
   address: string;
 
+  @Column()
+  role?: string;
+
   @OneToMany(() => Book, (book) => book.user)
   books: Book[];
 }

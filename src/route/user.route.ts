@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../controller/user.controller";
 import authMiddleware from "../middleware/auth.middleware";
+import roleMiddleware from "../middleware/role.middleware";
 
 const userRoute = Router();
 
@@ -9,7 +10,11 @@ userRoute.get("/", UserController.getUser);
 userRoute.get("/:id", UserController.getUserById);
 
 // has token
-userRoute.post("/", authMiddleware, UserController.createUser);
+userRoute.post(
+  "/",
+  [authMiddleware, roleMiddleware],
+  UserController.createUser
+);
 userRoute.put("/:id", authMiddleware, UserController.updateUser);
 userRoute.delete("/:id", authMiddleware, UserController.deleteUser);
 
